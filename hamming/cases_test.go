@@ -64,4 +64,10 @@ var testCases = []struct {
 		0,
 		true,
 	},
+	{ // UTF-8
+		"é",
+		"∑",
+		0,
+		true,
+	},
 }
