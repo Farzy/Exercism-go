@@ -90,6 +90,11 @@ func TestCleanupMessage(t *testing.T) {
 			oldMessage: "*****\n SALE\n*****",
 			want:       "SALE",
 		},
+		{
+			name:       "Cleanup message stars in the middle of the sentence",
+			oldMessage: "*****\n Death ** Star\n*****",
+			want:       "Death ** Star",
+		},
 	}
 
 	for _, tt := range tests {
