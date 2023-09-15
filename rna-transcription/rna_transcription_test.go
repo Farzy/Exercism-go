@@ -3,7 +3,7 @@ package strand
 import "testing"
 
 func TestRNATranscription(t *testing.T) {
-	for _, test := range rnaTests {
+	for _, test := range testCases {
 		if actual := ToRNA(test.input); actual != test.expected {
 			t.Fatalf("FAIL: %s - ToRNA(%q): %q, expected %q",
 				test.description, test.input, actual, test.expected)
@@ -14,7 +14,7 @@ func TestRNATranscription(t *testing.T) {
 
 func BenchmarkRNATranscription(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		for _, test := range rnaTests {
+		for _, test := range testCases {
 			ToRNA(test.input)
 		}
 	}
@@ -48,7 +48,7 @@ func BenchmarkRNATranscription(b *testing.B) {
 
 func BenchmarkRNATranscription_bwarren2(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		for _, test := range rnaTests {
+		for _, test := range testCases {
 			ToRNA_bwarren2(test.input)
 		}
 	}
@@ -56,7 +56,7 @@ func BenchmarkRNATranscription_bwarren2(b *testing.B) {
 
 func BenchmarkRNATranscription_mgood(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		for _, test := range rnaTests {
+		for _, test := range testCases {
 			ToRna_mgood(test.input)
 		}
 	}
@@ -64,7 +64,7 @@ func BenchmarkRNATranscription_mgood(b *testing.B) {
 
 func BenchmarkRNATranscription_jonahaapala(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		for _, test := range rnaTests {
+		for _, test := range testCases {
 			ToRNA_jonahaapala(test.input)
 		}
 	}
@@ -72,7 +72,7 @@ func BenchmarkRNATranscription_jonahaapala(b *testing.B) {
 
 func BenchmarkRNATranscription_kgibilterra(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		for _, test := range rnaTests {
+		for _, test := range testCases {
 			ToRNA_kgibilterra(test.input)
 		}
 	}
