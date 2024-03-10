@@ -18,7 +18,11 @@ var yearRatio = map[Planet]float64{
 }
 
 func Age(seconds float64, planet Planet) (age float64) {
-	age = seconds / SecondsInEarthYear / yearRatio[planet]
-
+	yr, ok := yearRatio[planet]
+	if ok {
+		age = seconds / SecondsInEarthYear / yr
+	} else {
+		age = -1
+	}
 	return
 }
