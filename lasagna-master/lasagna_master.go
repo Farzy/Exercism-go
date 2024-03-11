@@ -1,10 +1,17 @@
 package lasagna
 
+const (
+	defaultAveragePreparationTime = 2
+	noodleQtyPerLayer             = 50
+	sauceQtyPerLayer              = 0.2
+	defaultPortions               = 2
+)
+
 // PreparationTime estimates the time it takes to prepare lasagna, given
 // the layers and the average preparation time for a layer.
 func PreparationTime(layers []string, avgPreparationTime int) int {
 	if avgPreparationTime == 0 {
-		avgPreparationTime = 2
+		avgPreparationTime = defaultAveragePreparationTime
 	}
 	return len(layers) * avgPreparationTime
 }
@@ -14,9 +21,9 @@ func Quantities(layers []string) (noodles int, sauce float64) {
 	for i := 0; i < len(layers); i++ {
 		switch layers[i] {
 		case "noodles":
-			noodles += 50
+			noodles += noodleQtyPerLayer
 		case "sauce":
-			sauce += 0.2
+			sauce += sauceQtyPerLayer
 		}
 	}
 	return
@@ -30,7 +37,7 @@ func AddSecretIngredient(friendsList, myList []string) {
 // ScaleRecipe scales the proportions of the recipe for a larger number of portions
 func ScaleRecipe(quantities []float64, portions int) (newQuantities []float64) {
 	for i := 0; i < len(quantities); i++ {
-		newQuantities = append(newQuantities, quantities[i]*float64(portions)/2)
+		newQuantities = append(newQuantities, quantities[i]*float64(portions)/defaultPortions)
 	}
 	return
 }
