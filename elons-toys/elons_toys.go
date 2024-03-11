@@ -22,12 +22,7 @@ func (c Car) DisplayBattery() string {
 
 // CanFinish returns true if the car can finish the race, otherwise returns false.
 func (c Car) CanFinish(trackDistance int) bool {
-	rounds := float64(trackDistance) / float64(c.speed)
-	if float64(c.battery) >= rounds*float64(c.batteryDrain) {
-		return true
-	} else {
-		return false
-	}
+	return c.battery >= trackDistance*c.batteryDrain/c.speed
 }
 
 // Your first steps could be to read through the tasks, and create
