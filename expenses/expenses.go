@@ -38,10 +38,7 @@ func ByDaysPeriod(p DaysPeriod) func(Record) bool {
 // and false otherwise.
 func ByCategory(c string) func(Record) bool {
 	return func(record Record) bool {
-		if record.Category == c {
-			return true
-		}
-		return false
+		return record.Category == c
 	}
 }
 
