@@ -18,8 +18,8 @@ func SumOfSquaresSimple(n int) (sum int) {
 	if n < 0 {
 		panic("n must be a positive number")
 	}
-	for i := range n {
-		sum += (i + 1) * (i + 1)
+	for i := 1; i <= n; i++ {
+		sum += i * i
 	}
 	return
 }
