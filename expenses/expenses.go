@@ -1,6 +1,8 @@
 package expenses
 
-import "errors"
+import (
+	"fmt"
+)
 
 // Record represents an expense record.
 type Record struct {
@@ -58,7 +60,7 @@ func TotalByPeriod(in []Record, p DaysPeriod) (total float64) {
 func CategoryExpenses(in []Record, p DaysPeriod, c string) (float64, error) {
 	recordByExpense := Filter(in, ByCategory(c))
 	if len(recordByExpense) == 0 {
-		return 0, errors.New("unknown category " + c)
+		return 0, fmt.Errorf("unknown category %s", c)
 	}
 	return TotalByPeriod(recordByExpense, p), nil
 }
