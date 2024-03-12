@@ -24,3 +24,24 @@ func BenchmarkPangram(b *testing.B) {
 		}
 	}
 }
+
+func TestPangramUnicode(t *testing.T) {
+	for _, tc := range testCases {
+		t.Run(tc.description, func(t *testing.T) {
+			if actual := IsPangramUnicode(tc.input); actual != tc.expected {
+				t.Fatalf("IsPangramUnicode(%q) = %t, want: %t", tc.input, actual, tc.expected)
+			}
+		})
+	}
+}
+
+func BenchmarkPangramUnicode(b *testing.B) {
+	if testing.Short() {
+		b.Skip("skipping benchmark in short mode.")
+	}
+	for i := 0; i < b.N; i++ {
+		for _, test := range testCases {
+			IsPangramUnicode(test.input)
+		}
+	}
+}
