@@ -44,3 +44,45 @@ func BenchmarkRomanNumerals(b *testing.B) {
 		}
 	}
 }
+func TestRomanNumeralsMapping(t *testing.T) {
+	for _, tc := range validRomanNumeralTests {
+		t.Run(tc.description, func(t *testing.T) {
+			actual, err := ToRomanNumeralMapping(tc.input)
+			if err != nil {
+				// expect no error for all valid tests cases (canonical-data.json contains only valid cases)
+				t.Fatalf("ToRomanNumeralMapping(%d) returned error: %v, want: %q", tc.input, err, tc.expected)
+			}
+			if actual != tc.expected {
+				t.Fatalf("ToRomanNumeralMapping(%d) = %q, want: %q", tc.input, actual, tc.expected)
+			}
+		})
+
+	}
+}
+
+func TestRomanNumeralsInvalidMapping(t *testing.T) {
+	invalidRomanNumeralTests := []romanNumeralTest{
+		{description: "0 is out of range", input: 0},
+		{description: "-1 is out of range", input: -1},
+		{description: "4000 is out of range", input: 4000},
+	}
+	for _, tc := range invalidRomanNumeralTests {
+		t.Run(tc.description, func(t *testing.T) {
+			actual, err := ToRomanNumeralMapping(tc.input)
+			if err == nil {
+				t.Fatalf("ToRomanNumeralMapping(%d) expected error, got: %q", tc.input, actual)
+			}
+		})
+	}
+}
+
+func BenchmarkRomanNumeralsMapping(b *testing.B) {
+	if testing.Short() {
+		b.Skip("skipping benchmark in short mode.")
+	}
+	for i := 0; i < b.N; i++ {
+		for _, tc := range validRomanNumeralTests {
+			ToRomanNumeralMapping(tc.input)
+		}
+	}
+}
