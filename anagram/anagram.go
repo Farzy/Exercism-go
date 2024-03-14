@@ -19,7 +19,7 @@ func Detect(subject string, candidates []string) (anagrams []string) {
 	sortedSubject := sortRunes(subject)
 	for _, word := range candidates {
 		wordLowercase := strings.ToLower(word)
-		if wordLowercase == subject {
+		if len(subject) != len(wordLowercase) || wordLowercase == subject {
 			continue
 		}
 		sortedWord := sortRunes(wordLowercase)
