@@ -76,25 +76,26 @@ func FromCodon(codon string) (string, error) {
 	return protein, nil
 }
 
-func FromCodonSwitch(codon string) (string, error) {
+func FromCodonSwitch(codon string) (protein string, err error) {
 	switch codon {
 	case "AUG":
-		return "Methionine", nil
+		protein = "Methionine"
 	case "UUU", "UUC":
-		return "Phenylalanine", nil
+		protein = "Phenylalanine"
 	case "UUA", "UUG":
-		return "Leucine", nil
+		protein = "Leucine"
 	case "UCU", "UCC", "UCA", "UCG":
-		return "Serine", nil
+		protein = "Serine"
 	case "UAU", "UAC":
-		return "Tyrosine", nil
+		protein = "Tyrosine"
 	case "UGU", "UGC":
-		return "Cysteine", nil
+		protein = "Cysteine"
 	case "UGG":
-		return "Tryptophan", nil
+		protein = "Tryptophan"
 	case "UAA", "UAG", "UGA":
-		return "", ErrStop
+		err = ErrStop
 	default:
-		return "", ErrInvalidBase
+		err = ErrInvalidBase
 	}
+	return
 }
