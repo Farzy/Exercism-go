@@ -26,3 +26,14 @@ func BenchmarkWordCount(b *testing.B) {
 		}
 	}
 }
+
+func BenchmarkWordCountRegex(b *testing.B) {
+	if testing.Short() {
+		b.Skip("skipping benchmark in short mode.")
+	}
+	for i := 0; i < b.N; i++ {
+		for _, tt := range testCases {
+			WordCountRegex(tt.input)
+		}
+	}
+}

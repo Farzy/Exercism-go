@@ -1,9 +1,20 @@
 package wordcount
 
 import (
+	"regexp"
 	"strings"
 	"unicode"
 )
+
+// My solution is much faster than the version using Regex:
+// goos: darwin
+// goarch: amd64
+// pkg: wordcount
+// cpu: Intel(R) Core(TM) i7-8850H CPU @ 2.60GHz
+// BenchmarkWordCount
+// BenchmarkWordCount-12         	  136604	      8671 ns/op	    4032 B/op	      93 allocs/op
+// BenchmarkWordCountRegex
+// BenchmarkWordCountRegex-12    	   22996	     54123 ns/op	   45214 B/op	     455 allocs/op
 
 // Frequency represents a mapping of string words to their integer frequencies.
 type Frequency map[string]int
@@ -75,4 +86,13 @@ func WordCount(phrase string) Frequency {
 	}
 
 	return frequencies
+}
+
+func WordCountRegex(phrase string) Frequency {
+	re := regexp.MustCompile(`\w+('\w+)?`)
+	f := make(Frequency)
+	for _, s := range re.FindAllString(strings.ToLower(phrase), -1) {
+		f[s] += 1
+	}
+	return f
 }
