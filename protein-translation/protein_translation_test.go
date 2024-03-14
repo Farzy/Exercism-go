@@ -110,6 +110,24 @@ func TestCodon(t *testing.T) {
 	}
 }
 
+func TestCodonSwitch(t *testing.T) {
+	for _, tc := range codonTestCases {
+		t.Run(tc.input, func(t *testing.T) {
+			got, err := FromCodonSwitch(tc.input)
+			switch {
+			case tc.expectedError != nil:
+				if err != tc.expectedError {
+					t.Fatalf("FromCodonSwitch(%q) expected error: %v, got: %v", tc.input, tc.expectedError, err)
+				}
+			case err != nil:
+				t.Fatalf("FromCodonSwitch(%q) returned unexpected error: %v, want: %q", tc.input, err, tc.expected)
+			case got != tc.expected:
+				t.Fatalf("FromCodonSwitch(%q) = %q, want: %q", tc.input, got, tc.expected)
+			}
+		})
+	}
+}
+
 type rnaCase struct {
 	input         string
 	expected      []string
@@ -191,6 +209,17 @@ func BenchmarkCodon(b *testing.B) {
 	}
 }
 
+func BenchmarkCodonSwitch(b *testing.B) {
+	if testing.Short() {
+		b.Skip("skipping benchmark in short mode.")
+	}
+	for _, test := range codonTestCases {
+		for i := 0; i < b.N; i++ {
+			FromCodonSwitch(test.input)
+		}
+	}
+}
+
 func BenchmarkProtein(b *testing.B) {
 	if testing.Short() {
 		b.Skip("skipping benchmark in short mode.")
@@ -198,6 +227,17 @@ func BenchmarkProtein(b *testing.B) {
 	for _, test := range rnaTestCases {
 		for i := 0; i < b.N; i++ {
 			FromRNA(test.input)
+		}
+	}
+}
+
+func BenchmarkProteinSwitch(b *testing.B) {
+	if testing.Short() {
+		b.Skip("skipping benchmark in short mode.")
+	}
+	for _, test := range rnaTestCases {
+		for i := 0; i < b.N; i++ {
+			FromRNASwitch(test.input)
 		}
 	}
 }
