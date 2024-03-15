@@ -20,11 +20,38 @@ func TestNth(t *testing.T) {
 	}
 }
 
+func TestNthNthWithHistory(t *testing.T) {
+	for _, tc := range tests {
+		t.Run(tc.description, func(t *testing.T) {
+			actual, err := NthWithHistory(tc.input)
+			switch {
+			case tc.err != "":
+				if err == nil {
+					t.Fatalf("NthWithHistory(%d) expected error: %q, got: %d", tc.input, tc.err, actual)
+				}
+			case err != nil:
+				t.Fatalf("NthWithHistory(%d) returned error: %v, want: %d", tc.input, err, tc.expected)
+			case actual != tc.expected:
+				t.Fatalf("NthWithHistory(%d) = %d, want: %d", tc.input, actual, tc.expected)
+			}
+		})
+	}
+}
+
 func BenchmarkNth(b *testing.B) {
 	if testing.Short() {
 		b.Skip("skipping benchmark in short mode.")
 	}
 	for i := 0; i < b.N; i++ {
 		Nth(10001)
+	}
+}
+
+func BenchmarkNthNthWithHistory(b *testing.B) {
+	if testing.Short() {
+		b.Skip("skipping benchmark in short mode.")
+	}
+	for i := 0; i < b.N; i++ {
+		NthWithHistory(10001)
 	}
 }

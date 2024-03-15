@@ -24,6 +24,12 @@ var tests = []struct {
 		err:         "",
 	},
 	{
+		description: "41st prime",
+		input:       41,
+		expected:    179,
+		err:         "",
+	},
+	{
 		description: "sixth prime",
 		input:       6,
 		expected:    13,
