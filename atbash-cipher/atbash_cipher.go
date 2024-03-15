@@ -1,26 +1,25 @@
 package atbash
 
 import (
-	"strings"
-	"unicode"
+	"bytes"
 )
 
-const atbashAlphabet = "zyxwvutsrqponmlkjihgfedcba"
-
 func Atbash(s string) string {
-	output := strings.Builder{}
-	for _, chr := range s {
-		if unicode.IsNumber(chr) {
-			output.WriteRune(chr)
-		} else if !unicode.IsLetter(chr) {
-			continue
+	output := make([]byte, 0, len(s)+len(s)/5)
+	for _, chr := range []byte(s) {
+		if '0' <= chr && chr <= '9' {
+			output = append(output, chr)
+		} else if 'a' <= chr && chr <= 'z' {
+			output = append(output, 'z'-chr+'a')
+		} else if 'A' <= chr && chr <= 'Z' {
+			output = append(output, 'Z'-chr+'a')
 		} else {
-			output.WriteByte(atbashAlphabet[unicode.ToLower(chr)-'a'])
+			continue
 		}
 		// Add a space every 5 characters, use a hack to account for the spaces we add.
-		if (output.Len()+1)%6 == 0 {
-			output.WriteByte(' ')
+		if (len(output)+1)%6 == 0 {
+			output = append(output, ' ')
 		}
 	}
-	return strings.TrimSpace(output.String())
+	return string(bytes.TrimSuffix(output, []byte{' '}))
 }
